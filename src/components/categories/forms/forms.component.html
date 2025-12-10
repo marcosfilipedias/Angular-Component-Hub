@@ -1,0 +1,133 @@
+
+<div class="space-y-12">
+  <header>
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Forms</h1>
+    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">Comprehensive examples for laying out and styling form controls.</p>
+  </header>
+
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Sign Up Form</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg flex justify-center">
+      <div class="w-full max-w-md">
+        <form class="space-y-6" action="#" method="POST">
+          <div>
+            <label for="name" class="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300">Full Name</label>
+            <div class="mt-2">
+              <input id="name" name="name" type="text" autocomplete="name" required [class]="inputClasses()">
+            </div>
+          </div>
+
+          <div>
+            <label for="email-signup" class="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300">Email address</label>
+            <div class="mt-2">
+              <input id="email-signup" name="email" type="email" autocomplete="email" required [class]="inputClasses()">
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between">
+              <label for="password-signup" class="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300">Password</label>
+            </div>
+            <div class="mt-2">
+              <input id="password-signup" name="password" type="password" autocomplete="new-password" required [class]="inputClasses()">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2">
+            <!-- Custom Start Date Picker -->
+            <div>
+              <label for="start-date-btn" class="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300">Start Date</label>
+              <div class="mt-2 relative">
+                <button type="button" id="start-date-btn" (click)="toggleDatePicker('start')" [class]="inputClasses() + ' text-left flex justify-between items-center'">
+                  <span [class]="!selectedStartDate() ? 'text-slate-400' : ''">{{ formatDate(selectedStartDate()) }}</span>
+                  <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zM4.5 8.25v7a1.25 1.25 0 001.25 1.25h9.5a1.25 1.25 0 001.25-1.25v-7h-12z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                @if (isStartDatePickerOpen()) {
+                  <div class="absolute z-10 mt-2 w-80 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-slate-700 p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <button type="button" (click)="changeMonth(-1)" class="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                      </button>
+                      <div class="font-semibold text-slate-800 dark:text-slate-200">{{ calendarMonthYear() }}</div>
+                      <button type="button" (click)="changeMonth(1)" class="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                      </button>
+                    </div>
+                    <div class="grid grid-cols-7 text-center text-xs text-slate-500 dark:text-slate-400 mb-2">
+                      @for(day of weekdays; track day) { <div>{{ day }}</div> }
+                    </div>
+                    <div class="grid grid-cols-7 gap-1">
+                      @for (day of calendarDays(); track day.date) {
+                        <button type="button" (click)="selectDate(day, 'start')" 
+                          [class]="'w-10 h-10 rounded-full text-sm flex items-center justify-center transition-colors ' + 
+                            (!day.isCurrentMonth ? 'text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700/50' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700') +
+                            (day.isToday && !day.isSelected ? ' ring-1 ' + todayRingClass() : '') +
+                            (day.isSelected ? selectedDayClasses() : '')"
+                          [disabled]="!day.isCurrentMonth">
+                          {{ day.date.getDate() }}
+                        </button>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+             <!-- Custom End Date Picker -->
+            <div>
+              <label for="end-date-btn" class="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300">End Date</label>
+              <div class="mt-2 relative">
+                <button type="button" id="end-date-btn" (click)="toggleDatePicker('end')" [class]="inputClasses() + ' text-left flex justify-between items-center'">
+                   <span [class]="!selectedEndDate() ? 'text-slate-400' : ''">{{ formatDate(selectedEndDate()) }}</span>
+                   <svg class="h-5 w-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zM4.5 8.25v7a1.25 1.25 0 001.25 1.25h9.5a1.25 1.25 0 001.25-1.25v-7h-12z" clip-rule="evenodd" />
+                  </svg>
+                </button>
+                 @if (isEndDatePickerOpen()) {
+                  <div class="absolute z-10 mt-2 w-80 rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-slate-700 p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <button type="button" (click)="changeMonth(-1)" class="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                      </button>
+                      <div class="font-semibold text-slate-800 dark:text-slate-200">{{ calendarMonthYear() }}</div>
+                      <button type="button" (click)="changeMonth(1)" class="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-600">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                      </button>
+                    </div>
+                    <div class="grid grid-cols-7 text-center text-xs text-slate-500 dark:text-slate-400 mb-2">
+                      @for(day of weekdays; track day) { <div>{{ day }}</div> }
+                    </div>
+                    <div class="grid grid-cols-7 gap-1">
+                      @for (day of calendarDays(); track day.date) {
+                        <button type="button" (click)="selectDate(day, 'end')" 
+                          [class]="'w-10 h-10 rounded-full text-sm flex items-center justify-center transition-colors ' + 
+                            (!day.isCurrentMonth ? 'text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700/50' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700') +
+                            (day.isToday && !day.isSelected ? ' ring-1 ' + todayRingClass() : '') +
+                            (day.isSelected ? selectedDayClasses() : '')"
+                          [disabled]="!day.isCurrentMonth">
+                           {{ day.date.getDate() }}
+                        </button>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input id="remember-me" name="remember-me" type="checkbox" [class]="checkboxClasses()">
+              <label for="remember-me" class="ml-3 block text-sm leading-6 text-slate-900 dark:text-slate-300">I agree to the Terms and Conditions</label>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" [class]="buttonClasses()">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,98 @@
+
+<div class="max-w-4xl mx-auto space-y-8">
+  <header>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">{{ pageTitle() }}</h1>
+      <p class="mt-1 text-lg text-slate-500 dark:text-slate-400">Fill in the details below to {{ isEditMode() ? 'update the' : 'add a new' }} product.</p>
+  </header>
+
+  <div class="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-md border border-slate-200 dark:border-slate-700">
+    <form (ngSubmit)="onSave()" class="space-y-6">
+      
+      <!-- Product Name -->
+      <div>
+        <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Product Name</label>
+        <div class="mt-1">
+          <input type="text" id="name" [value]="productState().name" (input)="updateField('name', $event.target.value)" [class]="inputClasses()" required>
+        </div>
+      </div>
+      
+      <!-- Description -->
+      <div>
+        <label for="description" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Description</label>
+        <div class="mt-1">
+          <textarea id="description" rows="4" [value]="productState().description" (input)="updateField('description', $event.target.value)" [class]="inputClasses()"></textarea>
+        </div>
+         <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Write a short, compelling description for your product.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Price -->
+        <div>
+            <label for="price" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Price</label>
+            <div class="mt-1 relative rounded-md shadow-sm">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                    <span class="text-slate-500 sm:text-sm">$</span>
+                </div>
+                <input type="number" id="price" [value]="productState().price" (input)="updateField('price', $event.target.valueAsNumber)" [class]="inputClasses() + ' pl-7'" placeholder="0.00">
+            </div>
+        </div>
+        <!-- Image URL -->
+        <div>
+            <label for="imageUrl" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Image URL</label>
+            <div class="mt-1">
+                <input type="text" id="imageUrl" [value]="productState().imageUrl" (input)="updateField('imageUrl', $event.target.value)" [class]="inputClasses()" placeholder="https://picsum.photos/...">
+            </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Category -->
+        <div>
+            <label for="category" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Category</label>
+            <div class="mt-1">
+              <select id="category" [value]="productState().category" (change)="updateField('category', $event.target.value)" [class]="inputClasses()">
+                @for(cat of categories; track cat) {
+                  <option [value]="cat">{{cat}}</option>
+                }
+              </select>
+            </div>
+        </div>
+         <!-- Status -->
+        <div>
+            <label for="status" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Status</label>
+            <div class="mt-1">
+              <select id="status" [value]="productState().status" (change)="updateField('status', $event.target.value)" [class]="inputClasses()">
+                @for(s of statuses; track s) {
+                  <option [value]="s">{{s}}</option>
+                }
+              </select>
+            </div>
+        </div>
+      </div>
+
+       <!-- Tags -->
+      <div>
+        <label for="tags" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Tags</label>
+        <div class="mt-1">
+          <input type="text" id="tags" [value]="productState().tags.join(', ')" (input)="onTagsChange($event)" [class]="inputClasses()">
+        </div>
+        <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Enter comma-separated tags.</p>
+      </div>
+
+      <!-- Featured Toggle -->
+      <div class="flex items-center">
+        <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" [checked]="productState().featured" (change)="updateField('featured', $event.target.checked)" class="sr-only peer">
+            <div [class]="'w-11 h-6 bg-slate-200 dark:bg-slate-700 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[\'\'] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all ' + toggleBgClass()"></div>
+            <span class="ml-3 text-sm font-medium text-slate-900 dark:text-slate-300">Featured Product</span>
+        </label>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="pt-6 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-4">
+        <button type="button" (click)="onCancel()" [class]="secondaryButtonClasses">Cancel</button>
+        <button type="submit" [class]="primaryButtonClasses()">Save Product</button>
+      </div>
+    </form>
+  </div>
+</div>

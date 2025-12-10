@@ -1,0 +1,38 @@
+
+<div class="space-y-12">
+  <header>
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Dropdowns</h1>
+    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">Display a list of options when triggered by a button.</p>
+  </header>
+
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">User Profile Dropdown</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg flex justify-end">
+      
+      <div class="relative inline-block text-left">
+        <div>
+          <button (click)="toggleDropdown()" type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white dark:bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700" id="menu-button" aria-expanded="true" aria-haspopup="true">
+            Options
+            <svg class="-mr-1 h-5 w-5 text-slate-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+
+        @if (isDropdownOpen()) {
+          <div (click)="closeDropdown()" class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-slate-700 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+            <div class="py-1" role="none">
+              <a href="#" class="text-slate-700 dark:text-slate-200 block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700" role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
+              <a href="#" class="text-slate-700 dark:text-slate-200 block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700" role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
+              <a href="#" class="text-slate-700 dark:text-slate-200 block px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700" role="menuitem" tabindex="-1" id="menu-item-2">License</a>
+              <form method="POST" action="#" role="none">
+                <button type="submit" class="text-red-600 dark:text-red-400 block w-full px-4 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700" role="menuitem" tabindex="-1" id="menu-item-3">Sign out</button>
+              </form>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+  </section>
+</div>

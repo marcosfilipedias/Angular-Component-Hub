@@ -1,0 +1,110 @@
+
+<div class="space-y-8">
+  <header class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+        <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Analytics Dashboard</h1>
+        <p class="mt-1 text-lg text-slate-500 dark:text-slate-400">Welcome back, here's a summary of your store.</p>
+    </div>
+    <button [class]="primaryButtonClasses()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -ml-1 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+        </svg>
+        Generate Report
+    </button>
+  </header>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+      <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Revenue</h3>
+      <p class="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">$45,231.89</p>
+      <p class="mt-1 text-sm text-green-600 dark:text-green-400">+20.1% from last month</p>
+    </div>
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+      <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Subscriptions</h3>
+      <p class="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">+2350</p>
+      <p class="mt-1 text-sm text-green-600 dark:text-green-400">+180.1% from last month</p>
+    </div>
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+      <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Sales</h3>
+      <p class="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">+12,234</p>
+      <p class="mt-1 text-sm text-green-600 dark:text-green-400">+19% from last month</p>
+    </div>
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+      <h3 class="text-sm font-medium text-slate-500 dark:text-slate-400">Active Now</h3>
+      <p class="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">+573</p>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">+201 since last hour</p>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Sales Chart -->
+    <div class="lg:col-span-2 bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+        <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Sales Overview</h3>
+        <div class="flex items-end h-80 gap-4">
+          @for(item of salesReportData; track item.month) {
+            <div class="flex-1 flex flex-col items-center justify-end gap-1 group">
+                <div class="relative w-full h-full flex items-end">
+                    <div [class]="'w-full rounded-t-md transition-colors ' + chartBarClass()" [style.height.%]="(item.sales / maxSale()) * 100"></div>
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-700 text-white px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        ${{ item.sales }}
+                    </div>
+                </div>
+                <span class="text-xs text-slate-500 dark:text-slate-400">{{ item.month }}</span>
+            </div>
+          }
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+      <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Recent Activity</h3>
+      <div class="space-y-6">
+        @for(activity of activityFeed; track activity.subject) {
+          <div class="flex items-start gap-4">
+            <img [src]="activity.avatar" alt="user avatar" class="w-10 h-10 rounded-full">
+            <div>
+              <p class="text-sm text-slate-800 dark:text-slate-200">
+                <span class="font-semibold">{{ activity.user }}</span> {{ activity.action }} <span class="font-semibold">{{ activity.subject }}</span>.
+              </p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ activity.time }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Products Table -->
+  <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow border border-slate-200 dark:border-slate-700">
+    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4">Top Selling Products</h3>
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm text-left">
+        <thead class="border-b border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400">
+          <tr>
+            <th class="p-3">Product</th>
+            <th class="p-3">Category</th>
+            <th class="p-3">Status</th>
+            <th class="p-3 text-right">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(product of topProducts(); track product.id) {
+            <tr class="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+              <td class="p-3 flex items-center gap-3">
+                <img [src]="product.imageUrl" [alt]="product.name" class="w-10 h-10 rounded-md object-cover">
+                <p class="font-semibold text-slate-800 dark:text-slate-200">{{ product.name }}</p>
+              </td>
+              <td class="p-3 text-slate-600 dark:text-slate-300">{{ product.category }}</td>
+              <td class="p-3">
+                <span class="px-2 py-1 text-xs font-medium rounded-full" [class]="getStatusClass(product.status)">{{ product.status }}</span>
+              </td>
+              <td class="p-3 text-right text-slate-800 dark:text-slate-200 font-mono font-semibold">${{ product.price.toFixed(2) }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

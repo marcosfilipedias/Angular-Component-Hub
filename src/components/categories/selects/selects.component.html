@@ -1,0 +1,119 @@
+
+<div class="space-y-12">
+  <header>
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Selects</h1>
+    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">Customizable select components for single and multiple selections, with search functionality.</p>
+  </header>
+
+  <!-- Basic Select -->
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Basic Select</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg">
+      <div class="relative w-72">
+        <button (click)="toggleBasic()" type="button" class="relative w-full cursor-default rounded-md bg-white dark:bg-slate-800 py-2 pl-3 pr-10 text-left text-slate-900 dark:text-slate-100 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:outline-none focus:ring-2" [class]="focusRingClass()">
+          <span class="block truncate">{{ selectedFramework() }}</span>
+          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.24a.75.75 0 011.06-.02L10 15.148l2.7-2.928a.75.75 0 011.08 1.04l-3.25 3.5a.75.75 0 01-1.08 0l-3.25-3.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            </svg>
+          </span>
+        </button>
+
+        @if (isBasicOpen()) {
+          <ul class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-slate-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-slate-600 focus:outline-none sm:text-sm">
+            @for(fw of frameworks; track fw) {
+              <li 
+                (click)="selectFramework(fw)"
+                class="relative cursor-default select-none py-2 pl-3 pr-9 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700" 
+                [class.font-semibold]="fw === selectedFramework()"
+                [class.bg-indigo-600]="fw === selectedFramework()"
+                [class.text-white]="fw === selectedFramework()">
+                <span class="block truncate">{{ fw }}</span>
+                @if (fw === selectedFramework()) {
+                  <span class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-200">
+                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clip-rule="evenodd" /></svg>
+                  </span>
+                }
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+  </section>
+  
+  <!-- Multi Select -->
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Multi-select</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg">
+       <div class="relative w-72">
+        <button (click)="toggleMulti()" type="button" class="relative w-full cursor-default rounded-md bg-white dark:bg-slate-800 h-11 pl-3 pr-10 text-left text-slate-900 dark:text-slate-100 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:outline-none focus:ring-2 flex items-center" [class]="focusRingClass()">
+          <div class="flex items-center gap-1 overflow-hidden">
+            @if(selectedMultiOptions().length === 0) {
+              <span class="text-slate-400">Select options...</span>
+            }
+            @for(option of visibleMultiOptions(); track option) {
+              <span class="inline-flex items-center gap-x-1 rounded-full px-2 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-700 flex-shrink-0">
+                {{ option }}
+                <button (click)="removeMultiOption(option); $event.stopPropagation()" type="button" class="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-slate-500/20">
+                  <svg viewBox="0 0 14 14" class="h-3.5 w-3.5 stroke-slate-600/50 dark:stroke-slate-400/50 group-hover:stroke-slate-600/75 dark:group-hover:stroke-slate-400/75"><path d="M4 4l6 6m0-6l-6 6" /></svg>
+                </button>
+              </span>
+            }
+            @if (hiddenMultiOptionsCount() > 0) {
+              <span class="text-xs text-slate-500 dark:text-slate-400 py-1 font-medium flex-shrink-0">+{{ hiddenMultiOptionsCount() }} more</span>
+            }
+          </div>
+          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.24a.75.75 0 011.06-.02L10 15.148l2.7-2.928a.75.75 0 011.08 1.04l-3.25 3.5a.75.75 0 01-1.08 0l-3.25-3.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
+          </span>
+        </button>
+        @if (isMultiOpen()) {
+           <ul class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-slate-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-slate-600 focus:outline-none sm:text-sm">
+            @for(option of allMultiOptions; track option) {
+              <li class="relative cursor-default select-none py-2 px-3 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700">
+                <label class="flex items-center w-full cursor-pointer">
+                  <input type="checkbox" [checked]="selectedMultiOptions().includes(option)" (change)="toggleMultiOption(option, $event)" [class]="checkboxClasses()">
+                  <span class="ml-3 block truncate">{{ option }}</span>
+                </label>
+              </li>
+            }
+           </ul>
+        }
+       </div>
+    </div>
+  </section>
+
+  <!-- Searchable Select -->
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Searchable Select</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg">
+       <div class="relative w-72">
+        <button (click)="toggleSearchable()" type="button" class="relative w-full cursor-default rounded-md bg-white dark:bg-slate-800 py-2 pl-3 pr-10 text-left text-slate-900 dark:text-slate-100 shadow-sm ring-1 ring-inset ring-slate-300 dark:ring-slate-600 focus:outline-none focus:ring-2" [class]="focusRingClass()">
+          <span class="block truncate">{{ selectedCountry() ?? 'Select a country...' }}</span>
+          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+            <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.24a.75.75 0 011.06-.02L10 15.148l2.7-2.928a.75.75 0 011.08 1.04l-3.25 3.5a.75.75 0 01-1.08 0l-3.25-3.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
+          </span>
+        </button>
+
+        @if (isSearchableOpen()) {
+          <div class="absolute z-10 mt-1 w-full rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-slate-600">
+            <div class="p-2">
+              <input type="search" (input)="onSearch($event)" placeholder="Search country..." class="block w-full rounded-md border-0 bg-slate-100 dark:bg-slate-700 py-1.5 pl-3 pr-3 text-slate-900 dark:text-slate-200 ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset sm:text-sm" [class]="focusRingClass()">
+            </div>
+            <ul class="max-h-60 overflow-auto py-1 text-base focus:outline-none sm:text-sm">
+              @for(country of filteredCountries(); track country) {
+                <li (click)="selectCountry(country)" class="relative cursor-default select-none py-2 pl-3 pr-9 text-slate-900 dark:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-700" [class.bg-indigo-600]="country === selectedCountry()">
+                  <span class="block truncate">{{ country }}</span>
+                </li>
+              }
+              @if(filteredCountries().length === 0) {
+                 <li class="relative cursor-default select-none py-2 px-3 text-slate-500">No country found.</li>
+              }
+            </ul>
+          </div>
+        }
+       </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,65 @@
+
+<div class="space-y-8">
+  @if(product(); as p) {
+    <header>
+       <nav class="flex items-center space-x-2 text-sm font-medium text-slate-500 dark:text-slate-400 mb-4">
+        <button (click)="onBack()" class="hover:text-slate-700 dark:hover:text-slate-200 hover:underline">Products</button>
+        <svg class="h-5 w-5 flex-shrink-0 text-slate-300 dark:text-slate-600" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+        </svg>
+        <span class="text-slate-700 dark:text-slate-200">{{ p.name }}</span>
+      </nav>
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">{{ p.name }}</h1>
+            <p class="mt-1 text-lg text-slate-500 dark:text-slate-400">{{ p.category }}</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <button (click)="onBack()" [class]="secondaryButtonClasses">Back</button>
+            <button (click)="onEdit()" [class]="primaryButtonClasses()">Edit Product</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="bg-white dark:bg-slate-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <div class="p-4">
+            <img [src]="p.imageUrl" [alt]="p.name" class="w-full h-96 object-cover rounded-lg">
+        </div>
+        <div class="p-8 flex flex-col justify-center">
+            <div class="flex items-center justify-between">
+                <span class="text-4xl font-bold text-slate-900 dark:text-slate-100 font-mono">${{ p.price.toFixed(2) }}</span>
+                <span class="text-sm font-medium px-3 py-1.5 rounded-full" [class]="getStatusClass(p.status)">{{ p.status }}</span>
+            </div>
+            
+            <div class="mt-6 border-t border-slate-200 dark:border-slate-700 pt-6">
+                <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200">Description</h3>
+                <p class="mt-2 text-slate-600 dark:text-slate-400">{{ p.description }}</p>
+            </div>
+
+            <div class="mt-6">
+                 <h3 class="text-lg font-semibold text-slate-800 dark:text-slate-200">Tags</h3>
+                 <div class="mt-2 flex flex-wrap gap-2">
+                    @for(tag of p.tags; track tag) {
+                        <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium" [class]="chipClass()">{{ tag }}</span>
+                    }
+                 </div>
+            </div>
+             @if (p.featured) {
+                 <div class="mt-6 flex items-center gap-2 text-amber-500 dark:text-amber-400">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.868 2.884c.321-.772 1.305-.772 1.626 0l2.17 5.217a1 1 0 00.95.69h5.492c.828 0 1.171 1.025.566 1.58l-4.434 3.226a1 1 0 00-.364 1.118l1.691 5.217c.321.988-.757 1.757-1.55.932L10 15.347l-4.434 3.226c-.793.825-1.87-.056-1.55-1.042l1.69-5.217a1 1 0 00-.364-1.118L.932 10.371c-.605-.555-.262-1.58.566-1.58h5.492a1 1 0 00.95-.69L10.868 2.884z" clip-rule="evenodd" /></svg>
+                    <span class="font-semibold text-sm">Featured Product</span>
+                 </div>
+             }
+        </div>
+      </div>
+    </div>
+
+  } @else {
+    <div class="text-center py-20">
+      <h2 class="text-xl font-semibold text-slate-700 dark:text-slate-300">Product not found</h2>
+      <p class="mt-2 text-slate-500 dark:text-slate-400">The product you are looking for does not exist.</p>
+      <button (click)="onBack()" [class]="'mt-6 ' + primaryButtonClasses()">Go back to Products</button>
+    </div>
+  }
+</div>

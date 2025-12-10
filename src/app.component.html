@@ -1,0 +1,114 @@
+
+<div class="min-h-screen" [class]="containerBgClass()">
+  <app-topnav (toggleSidebar)="toggleSidebar()"></app-topnav>
+  
+  <div class="relative flex">
+    <app-sidebar 
+      [selectedCategory]="currentView().page" 
+      [isMobileOpen]="isSidebarOpen()"
+      (categorySelected)="onCategorySelected($event)"
+      (closeSidebar)="closeSidebar()">
+    </app-sidebar>
+
+    <main class="flex-1 lg:pl-64">
+       <div class="pt-16 h-full">
+        <div class="p-8 lg:p-12">
+            @switch (currentView().page) {
+              @case ('analytics') {
+                <app-analytics></app-analytics>
+              }
+              @case ('liquid-dashboard') {
+                <app-liquid-dashboard></app-liquid-dashboard>
+              }
+              @case ('products') {
+                <app-product-list 
+                  (viewProduct)="navigateToShowProduct($event)"
+                  (editProduct)="navigateToEditProduct($event)"
+                  (addProduct)="navigateToCreateProduct()">
+                </app-product-list>
+              }
+              @case ('productList') {
+                 <app-product-list 
+                  (viewProduct)="navigateToShowProduct($event)"
+                  (editProduct)="navigateToEditProduct($event)"
+                  (addProduct)="navigateToCreateProduct()">
+                </app-product-list>
+              }
+              @case ('productDetail') {
+                @if(currentView(); as view) {
+                  <app-product-detail 
+                    [productId]="view.id!"
+                    (editProduct)="navigateToEditProduct($event)"
+                    (backToList)="navigateToProductList()">
+                  </app-product-detail>
+                }
+              }
+              @case ('productForm') {
+                @if(currentView(); as view) {
+                  <app-product-form 
+                    [productId]="view.id"
+                    (save)="handleProductSave($event)"
+                    (cancel)="navigateToProductList()">
+                  </app-product-form>
+                }
+              }
+              @case ('buttons') {
+                <app-buttons></app-buttons>
+              }
+              @case ('inputs') {
+                <app-inputs></app-inputs>
+              }
+              @case ('selects') {
+                <app-selects></app-selects>
+              }
+               @case ('checkboxes') {
+                <app-checkboxes></app-checkboxes>
+              }
+              @case ('cards') {
+                <app-cards></app-cards>
+              }
+              @case ('alerts') {
+                <app-alerts></app-alerts>
+              }
+              @case ('modals') {
+                <app-modals></app-modals>
+              }
+              @case ('tables') {
+                <app-tables></app-tables>
+              }
+               @case ('dropdowns') {
+                <app-dropdowns></app-dropdowns>
+              }
+               @case ('navigation') {
+                <app-navigation></app-navigation>
+              }
+               @case ('forms') {
+                <app-forms></app-forms>
+              }
+              @case ('accordion') {
+                <app-accordion></app-accordion>
+              }
+              @case ('badges') {
+                <app-badges></app-badges>
+              }
+              @case ('chips') {
+                <app-chips></app-chips>
+              }
+              @case ('progress') {
+                <app-progress></app-progress>
+              }
+              @case ('stepper') {
+                <app-stepper></app-stepper>
+              }
+              @case ('tooltips') {
+                <app-tooltips></app-tooltips>
+              }
+              @case ('skeletons') {
+                <app-skeletons></app-skeletons>
+              }
+            }
+          </div>
+       </div>
+    </main>
+  </div>
+</div>

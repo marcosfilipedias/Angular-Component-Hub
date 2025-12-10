@@ -1,0 +1,36 @@
+
+<div class="space-y-12">
+  <header>
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Accordion</h1>
+    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">Allows users to show and hide sections of related content on a page.</p>
+  </header>
+
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Basic Accordion</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg">
+      <div class="w-full max-w-2xl mx-auto space-y-2">
+        @for(item of accordionItems; track item.id) {
+          <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+            <h2>
+              <button 
+                type="button" 
+                class="flex items-center justify-between w-full p-5 font-medium text-left text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50"
+                (click)="togglePanel(item.id)"
+                [attr.aria-expanded]="openPanel() === item.id">
+                <span>{{ item.title }}</span>
+                <svg class="w-6 h-6 shrink-0 transition-transform duration-200" [class.rotate-180]="openPanel() === item.id" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </h2>
+            @if(openPanel() === item.id) {
+              <div class="p-5 border-t border-slate-200 dark:border-slate-700">
+                <p class="text-slate-600 dark:text-slate-400">{{ item.content }}</p>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+</div>

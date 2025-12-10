@@ -1,0 +1,50 @@
+
+<div class="space-y-12">
+  <header>
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Tooltips</h1>
+    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">Display informative text when users hover over, focus on, or tap an element.</p>
+  </header>
+
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Tooltip Positions</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg flex flex-wrap items-center justify-center gap-16 min-h-[200px]">
+      
+      <!-- Tooltip on Top -->
+      <div class="relative group flex flex-col items-center">
+        <button [class]="buttonClasses()">Top</button>
+        <div class="absolute bottom-full mb-2 w-max bg-slate-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none border border-transparent dark:border-slate-700 shadow-lg">
+          Tooltip on top
+          <svg class="absolute text-slate-900 h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+        </div>
+      </div>
+      
+      <!-- Tooltip on Bottom -->
+      <div class="relative group flex flex-col items-center">
+        <button [class]="buttonClasses()">Bottom</button>
+        <div class="absolute top-full mt-2 w-max bg-slate-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none border border-transparent dark:border-slate-700 shadow-lg">
+          Tooltip on bottom
+          <svg class="absolute text-slate-900 h-2 w-full left-0 bottom-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,255 127.5,127.5 255,255"/></svg>
+        </div>
+      </div>
+
+      <!-- Tooltip on Left -->
+      <div class="relative group flex flex-col items-center">
+        <button [class]="buttonClasses()">Left</button>
+        <div class="absolute right-full mr-2 w-max bg-slate-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none border border-transparent dark:border-slate-700 shadow-lg">
+          Tooltip on left
+          <svg class="absolute text-slate-900 h-full w-2 left-full top-0" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 255,127.5 0,255"/></svg>
+        </div>
+      </div>
+
+      <!-- Tooltip on Right -->
+      <div class="relative group flex flex-col items-center">
+        <button [class]="buttonClasses()">Right</button>
+        <div class="absolute left-full ml-2 w-max bg-slate-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none border border-transparent dark:border-slate-700 shadow-lg">
+          Tooltip on right
+           <svg class="absolute text-slate-900 h-full w-2 right-full top-0" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="255,0 0,127.5 255,255"/></svg>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>

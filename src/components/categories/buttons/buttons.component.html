@@ -1,0 +1,50 @@
+
+<div class="space-y-12">
+  <header>
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Buttons</h1>
+    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">A collection of versatile button styles for various actions and emphasis levels.</p>
+  </header>
+
+  <!-- Solid Buttons -->
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Solid Buttons</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg flex flex-wrap items-center gap-4">
+      <button [class]="primaryButtonClasses()">Primary</button>
+      <button [class]="secondaryButtonClasses()">Secondary</button>
+      <button [class]="primaryButtonClasses()" disabled>Disabled</button>
+      <button [class]="primaryButtonClasses()">
+        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Loading...
+      </button>
+    </div>
+  </section>
+
+  <!-- Outline Buttons -->
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Outline & Ghost Buttons</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg flex flex-wrap items-center gap-4">
+      <button [class]="outlineButtonClasses()">Outline</button>
+      <button [class]="ghostButtonClasses()">Ghost</button>
+      <button [class]="outlineButtonClasses()" disabled>Disabled</button>
+      <button [class]="outlineButtonClasses()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        <span>With Icon</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Button Sizes -->
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Sizes</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg flex flex-wrap items-center gap-4">
+      <button [class]="primaryButtonClasses() + ' px-3 py-1.5 text-sm'">Small</button>
+      <button [class]="primaryButtonClasses() + ' px-4 py-2 text-base'">Medium</button>
+      <button [class]="primaryButtonClasses() + ' px-6 py-3 text-lg'">Large</button>
+    </div>
+  </section>
+</div>

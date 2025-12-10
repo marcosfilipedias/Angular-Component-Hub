@@ -1,0 +1,62 @@
+
+<div class="space-y-12">
+  <header>
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Checkboxes</h1>
+    <p class="mt-2 text-lg text-slate-500 dark:text-slate-400">Used to select one or more options from a set.</p>
+  </header>
+
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Themed Checkboxes</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg flex flex-wrap items-center gap-12">
+      <div class="flex items-center">
+        <input id="checkbox-unchecked" name="checkbox-unchecked" type="checkbox" [class]="checkboxClasses()">
+        <label for="checkbox-unchecked" class="ml-3 block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300">Unchecked</label>
+      </div>
+      <div class="flex items-center">
+        <input id="checkbox-checked" name="checkbox-checked" type="checkbox" checked [class]="checkboxClasses()">
+        <label for="checkbox-checked" class="ml-3 block text-sm font-medium leading-6 text-slate-900 dark:text-slate-300">Checked</label>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">With Description</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg max-w-lg">
+        <fieldset class="space-y-5">
+          <div class="relative flex items-start">
+            <div class="flex h-5 items-center">
+              <input id="comments" aria-describedby="comments-description" name="comments" type="checkbox" checked [class]="checkboxClasses()">
+            </div>
+            <div class="ml-3 text-sm leading-6">
+              <label for="comments" class="font-medium text-slate-900 dark:text-slate-100">New comments</label>
+              <p id="comments-description" class="text-slate-500 dark:text-slate-400">Get notified when someones posts a comment on a posting.</p>
+            </div>
+          </div>
+          <div class="relative flex items-start">
+            <div class="flex h-5 items-center">
+              <input id="candidates" aria-describedby="candidates-description" name="candidates" type="checkbox" [class]="checkboxClasses()">
+            </div>
+            <div class="ml-3 text-sm leading-6">
+              <label for="candidates" class="font-medium text-slate-900 dark:text-slate-100">New candidates</label>
+              <p id="candidates-description" class="text-slate-500 dark:text-slate-400">Get notified when a new candidate applies for a job.</p>
+            </div>
+          </div>
+        </fieldset>
+    </div>
+  </section>
+
+  <section class="space-y-6">
+    <h2 class="text-xl font-semibold border-b border-slate-200 dark:border-slate-700 pb-2 text-slate-800 dark:text-slate-200">Disabled State</h2>
+    <div class="p-8 bg-white dark:bg-slate-900 rounded-lg flex flex-wrap items-center gap-12">
+       <div class="flex items-center">
+        <input id="checkbox-disabled-unchecked" name="checkbox-disabled-unchecked" type="checkbox" disabled [class]="disabledCheckboxClasses">
+        <label for="checkbox-disabled-unchecked" class="ml-3 block text-sm font-medium leading-6 text-slate-400 dark:text-slate-500">Unchecked Disabled</label>
+      </div>
+       <div class="flex items-center">
+        <input id="checkbox-disabled-checked" name="checkbox-disabled-checked" type="checkbox" checked disabled [class]="disabledCheckboxClasses + ' text-slate-400 dark:text-slate-500'">
+        <label for="checkbox-disabled-checked" class="ml-3 block text-sm font-medium leading-6 text-slate-400 dark:text-slate-500">Checked Disabled</label>
+      </div>
+    </div>
+  </section>
+
+</div>
